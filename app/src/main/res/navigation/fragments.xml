@@ -6,6 +6,12 @@
     android:id="@+id/fragments">
 
     <fragment
+        android:id="@+id/menuSearch"
+        android:name="hr.vpetrina.music.fragment.SearchFragment"
+        android:label="@string/search"
+        tools:layout="@layout/fragment_search" />
+
+    <fragment
         android:id="@+id/menuItems"
         android:name="hr.vpetrina.music.fragment.ItemsFragment"
         android:label="@string/items"

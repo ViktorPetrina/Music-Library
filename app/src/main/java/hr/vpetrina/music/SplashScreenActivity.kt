@@ -15,7 +15,7 @@ import hr.vpetrina.music.framework.startActivity
 
 
 private const val DELAY = 3000L
-const val DATA_IMPORTED = "hr.algebra.nasa.data_imported"
+const val DATA_IMPORTED = "hr.vpetrina.music.data_imported"
 
 class SplashScreenActivity : AppCompatActivity() {
 

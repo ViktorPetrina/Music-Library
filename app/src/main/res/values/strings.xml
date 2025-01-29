@@ -17,4 +17,5 @@
     <string name="app_icon_image">App icon image</string>
     <string name="search">Search</string>
     <string name="songs">Songs</string>
+    <string name="search_bar_hint">Song name</string>
 </resources>

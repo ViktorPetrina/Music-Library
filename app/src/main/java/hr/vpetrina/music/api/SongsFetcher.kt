@@ -30,9 +30,9 @@ class SongsFetcher(private val context: Context) {
         songsApi = retrofit.create(SongsApi::class.java)
     }
 
-    fun fetchItems(limit: Int) {
+    fun fetchItems(limit: Int, name: String) {
 
-        val request = songsApi.fetchItems(limit, "happy")
+        val request = songsApi.fetchItems(limit, name)
 
         request.enqueue(object: Callback<ApiResponse> {
             override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
@@ -56,11 +56,10 @@ class SongsFetcher(private val context: Context) {
                     put(Item::picturePath.name, picturePath ?: "")
                 }
 
-                var uri = context.contentResolver.insert(
+                context.contentResolver.insert(
                     SONGS_PROVIDER_CONTENT_URI,
                     values
                 )
-                Log.d("populateItems", "Inserted URI: $uri")
             }
 
             context.sendBroadcast<SongsReceiver>()

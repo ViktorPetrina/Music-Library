@@ -8,7 +8,7 @@ class SongsWorker(private val context: Context, workerParams: WorkerParameters)
     : Worker(context, workerParams) {
 
     override fun doWork(): Result {
-        SongsFetcher(context).fetchItems(10)
+        SongsFetcher(context).fetchItems(10, "happy")
         return Result.success()
     }
 }
