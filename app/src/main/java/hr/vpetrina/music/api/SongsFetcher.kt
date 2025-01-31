@@ -45,6 +45,30 @@ class SongsFetcher(private val context: Context) {
         })
     }
 
+    fun getSongs(limit: Int, name: String, callback: (MutableList<Item>) -> Unit) {
+
+        val request = songsApi.fetchItems(limit, name)
+
+        request.enqueue(object: Callback<ApiResponse> {
+            val songs = mutableListOf<Item>()
+
+            override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
+                response.body()?.results?.let {
+                    it.forEach { song ->
+                        val picturePath = downloadImage(context, song.imageUrl)
+                        songs.add(Item(null, song.title, picturePath ?: ""))
+                    }
+                }
+                callback(songs)
+            }
+
+            override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                Log.d(javaClass.name, t.message, t)
+                callback(mutableListOf())
+            }
+        })
+    }
+
     private fun populateItems(nasaItems: List<SongItem>) {
         val scope = CoroutineScope(Dispatchers.IO)
         scope.launch {

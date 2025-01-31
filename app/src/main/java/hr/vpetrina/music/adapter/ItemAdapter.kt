@@ -30,7 +30,7 @@ class ItemAdapter(
             tvItem.text = item.title
             Picasso.get()
                 .load(File(item.picturePath))
-                .error(R.drawable.nasa)
+                .error(R.drawable.song_icon)
                 .transform(RoundedCornersTransformation(50, 5))
                 .into(ivItem)
         }
