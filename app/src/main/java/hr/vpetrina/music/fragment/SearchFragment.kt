@@ -21,7 +21,7 @@ import retrofit2.create
 class SearchFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchBinding
-    private val songs = mutableListOf(Item(null, "test 1", ""))
+    private val songs = mutableListOf<Item>()
     private lateinit var songsApi: SongsApi
 
     override fun onCreateView(

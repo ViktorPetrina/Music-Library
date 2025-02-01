@@ -18,4 +18,6 @@
     <string name="search">Search</string>
     <string name="songs">Songs</string>
     <string name="search_bar_hint">Song name</string>
+    <string name="add_song">Add song</string>
+    <string name="add_song_message">Do you want to add this song to your library?</string>
 </resources>

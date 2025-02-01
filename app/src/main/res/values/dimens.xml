@@ -10,7 +10,7 @@
     <dimen name="_10dp">10dp</dimen>
     <dimen name="itemTextSize">18sp</dimen>
     <dimen name="itemCornerRadius">9dp</dimen>
-    <dimen name="splash_screen_text_view_margin">80dp</dimen>
+    <dimen name="splash_screen_text_view_margin">60dp</dimen>
     <dimen name="splash_screen_text_size">40sp</dimen>
     <dimen name="about_text_size">20sp</dimen>
     <dimen name="search_margin">6dp</dimen>

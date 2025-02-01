@@ -1,6 +1,7 @@
 package hr.vpetrina.music.adapter
 
 import android.content.ContentUris
+import android.content.ContentValues
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +30,8 @@ class ItemAdapter(
         fun bind(item: Item) {
             tvItem.text = item.title
             Picasso.get()
-                .load(File(item.picturePath))
+                .load(item.picturePath.ifBlank { null })
+                .placeholder(R.drawable.song_icon)
                 .error(R.drawable.song_icon)
                 .transform(RoundedCornersTransformation(50, 5))
                 .into(ivItem)
@@ -48,6 +50,18 @@ class ItemAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
 
+        holder.itemView.setOnClickListener {
+            AlertDialog.Builder(context).apply {
+                setTitle(context.getString(R.string.add_song))
+                setMessage(context.getString(R.string.add_song_message))
+                setIcon(R.drawable.songs_icon)
+                setCancelable(true)
+                setPositiveButton("Yes") {_, _ -> addItem(item)}
+                setNegativeButton("No", null)
+                show()
+            }
+        }
+        
         holder.itemView.setOnLongClickListener {
             AlertDialog.Builder(context).apply {
                 setTitle(context.getString(R.string.delete))
@@ -62,6 +76,18 @@ class ItemAdapter(
         }
 
         holder.bind(item)
+    }
+
+    private fun addItem(item: Item) {
+        val values = ContentValues().apply {
+            put(Item::title.name, item.title)
+            put(Item::picturePath.name, item.picturePath)
+        }
+
+        context.contentResolver.insert(
+            SONGS_PROVIDER_CONTENT_URI,
+            values
+        )
     }
 
     private fun deleteItem(position: Int) {

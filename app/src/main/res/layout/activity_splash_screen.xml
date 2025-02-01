@@ -15,7 +15,6 @@
         android:contentDescription="@string/app_icon_image"
         android:src="@drawable/app_launcher_icon"
         android:layout_width="wrap_content"
-        android:layout_marginTop="@dimen/notch_height_margin"
         android:layout_height="@dimen/splash_screen_image_size" />
 
     <TextView
