@@ -1,5 +1,6 @@
 package hr.vpetrina.music
 
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.work.ExistingWorkPolicy
@@ -8,6 +9,7 @@ import androidx.work.WorkManager
 import hr.vpetrina.music.api.SongsWorker
 import hr.vpetrina.music.databinding.ActivitySplashScreenBinding
 import hr.vpetrina.music.framework.applyAnimation
+import hr.vpetrina.music.framework.askForPermissions
 import hr.vpetrina.music.framework.callDelayed
 import hr.vpetrina.music.framework.getBooleanPreference
 import hr.vpetrina.music.framework.isOnline
@@ -37,6 +39,8 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private fun redirect() {
 
+        askForPermissions()
+
         if (getBooleanPreference(DATA_IMPORTED)) {
             callDelayed(DELAY) { startActivity<HostActivity>() }
         } else {
@@ -56,6 +60,8 @@ class SplashScreenActivity : AppCompatActivity() {
             }
         }
     }
+
+
 
 
 }

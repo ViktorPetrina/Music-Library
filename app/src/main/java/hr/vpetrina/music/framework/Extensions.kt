@@ -7,14 +7,18 @@ import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.os.Build
+import android.os.Environment
 import android.os.Handler
 import android.os.Looper
 import android.preference.PreferenceManager
+import android.provider.Settings
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.core.content.getSystemService
 import hr.vpetrina.music.SONGS_PROVIDER_CONTENT_URI
 import hr.vpetrina.music.model.Item
+
 
 fun View.applyAnimation(id: Int) {
     // view ima context
@@ -93,4 +97,14 @@ fun Context.fetchItems(): MutableList<Item> {
     }
 
     return items
+}
+
+fun Context.askForPermissions() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        if (!Environment.isExternalStorageManager()) {
+            val intent = Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
+            startActivity(intent)
+            return
+        }
+    }
 }

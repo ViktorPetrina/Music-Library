@@ -14,8 +14,7 @@
         app:defaultNavHost="true"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/notch_height_margin"/>
+        android:layout_height="match_parent" />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navView"
@@ -25,7 +24,6 @@
         android:background="@color/main_background_color"
         android:layout_gravity="start"
         android:layout_width="@dimen/nav_width"
-        android:layout_height="@dimen/nav_height"
-        android:layout_marginTop="@dimen/notch_height_margin" />
+        android:layout_height="@dimen/nav_height" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
