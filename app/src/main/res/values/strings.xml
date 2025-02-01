@@ -20,4 +20,7 @@
     <string name="search_bar_hint">Song name</string>
     <string name="add_song">Add song</string>
     <string name="add_song_message">Do you want to add this song to your library?</string>
+    <string name="empty_library">Empty library</string>
+    <string name="empty_library_message">There are no songs in your library.</string>
+    <string name="song_details">Song details</string>
 </resources>

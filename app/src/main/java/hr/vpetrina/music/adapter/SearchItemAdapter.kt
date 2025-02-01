@@ -3,6 +3,9 @@ package hr.vpetrina.music.adapter
 import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
+import android.media.AudioAttributes
+import android.media.MediaPlayer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,11 +19,12 @@ import hr.vpetrina.music.model.Item
 import hr.vpetrina.music.R
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 import java.io.File
+import java.io.IOException
 
-class ItemAdapter(
+class SearchItemAdapter(
     private val context: Context,
     private val items: MutableList<Item>)
-    : RecyclerView.Adapter<ItemAdapter.ViewHolder>()
+    : RecyclerView.Adapter<SearchItemAdapter.ViewHolder>()
 {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -50,49 +54,69 @@ class ItemAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
 
-        holder.itemView.setOnClickListener {
-            AlertDialog.Builder(context).apply {
-                setTitle(context.getString(R.string.song_details))
-                setMessage("Song details...")
-                setIcon(R.drawable.songs_icon)
-                setCancelable(true)
-                setPositiveButton("Play song") {_, _ -> playSong(item)}
-                setNegativeButton("Ok", null)
-                show()
-            }
-        }
-        
         holder.itemView.setOnLongClickListener {
             AlertDialog.Builder(context).apply {
-                setTitle(context.getString(R.string.delete))
-                setMessage(context.getString(R.string.sure_to_delete))
-                setIcon(R.drawable.delete)
+                setTitle(context.getString(R.string.add_song))
+                setMessage(context.getString(R.string.add_song_message))
+                setIcon(R.drawable.songs_icon)
                 setCancelable(true)
-                setPositiveButton("OK") {_, _ -> deleteItem(position)}
-                setNegativeButton(context.getString(R.string.cancel), null)
+                setPositiveButton("Yes") {_, _ -> addItem(item)}
+                setNegativeButton("No", null)
                 show()
             }
             true
+        }
+        
+        holder.itemView.setOnClickListener {
+            AlertDialog.Builder(context).apply {
+                setTitle("Audio")
+                setMessage("Play song?")
+                setIcon(R.drawable.play_icon)
+                setCancelable(true)
+                setPositiveButton("Play") {_, _ -> playSong(item)}
+                setNegativeButton(context.getString(R.string.cancel), null)
+                show()
+            }
         }
 
         holder.bind(item)
     }
 
+    private val mediaPlayer = MediaPlayer()
+
     private fun playSong(item: Item) {
-        TODO("Not yet implemented")
+        mediaPlayer.setAudioAttributes(
+            AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .build())
+
+        if (mediaPlayer.isPlaying) {
+            mediaPlayer.stop()
+            mediaPlayer.reset()
+            mediaPlayer.release()
+        }
+
+        try {
+            mediaPlayer.setDataSource(item.trackUrl)
+            mediaPlayer.prepare()
+            mediaPlayer.start()
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        Log.v("MUSIC", "Music is streaming")
     }
 
-    private fun deleteItem(position: Int) {
-        val item = items[position]
+    private fun addItem(item: Item) {
+        val values = ContentValues().apply {
+            put(Item::title.name, item.title)
+            put(Item::picturePath.name, item.picturePath)
+            put(Item::trackUrl.name, item.trackUrl)
+        }
 
-        context.contentResolver.delete(
-            ContentUris.withAppendedId(SONGS_PROVIDER_CONTENT_URI, item._id!!),
-            null,
-            null)
-
-        items.removeAt(position)
-        File(item.picturePath).delete()
-
-        notifyDataSetChanged()
+        context.contentResolver.insert(
+            SONGS_PROVIDER_CONTENT_URI,
+            values
+        )
     }
 }

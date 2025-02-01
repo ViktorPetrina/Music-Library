@@ -4,10 +4,12 @@ data class Item(
     var _id: Long?,
     val title: String,
     val picturePath: String,
+    val trackUrl: String
 )
 
 data class Song(
     var _id: Long?,
     val title: String,
-    val picturePath: String
+    val picturePath: String,
+    val trackUrl: String
 )

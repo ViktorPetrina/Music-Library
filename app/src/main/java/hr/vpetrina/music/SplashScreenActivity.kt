@@ -1,22 +1,16 @@
 package hr.vpetrina.music
 
-import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
-import hr.vpetrina.music.api.SongsWorker
 import hr.vpetrina.music.databinding.ActivitySplashScreenBinding
 import hr.vpetrina.music.framework.applyAnimation
-import hr.vpetrina.music.framework.askForPermissions
 import hr.vpetrina.music.framework.callDelayed
-import hr.vpetrina.music.framework.getBooleanPreference
 import hr.vpetrina.music.framework.isOnline
 import hr.vpetrina.music.framework.startActivity
 
 
 private const val DELAY = 3000L
+private const val NO_INTERNET_DELAY = 4500L
 const val DATA_IMPORTED = "hr.vpetrina.music.data_imported"
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -38,30 +32,11 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private fun redirect() {
-
-        askForPermissions()
-
-        if (getBooleanPreference(DATA_IMPORTED)) {
+        if (isOnline()) {
             callDelayed(DELAY) { startActivity<HostActivity>() }
         } else {
-            if (isOnline()) {
-
-                WorkManager.getInstance(this).apply {
-                    enqueueUniqueWork(
-                        DATA_IMPORTED,
-                        ExistingWorkPolicy.KEEP,
-                        OneTimeWorkRequest.Companion.from(SongsWorker::class.java)
-                    )
-                }
-
-            } else {
-                binding.tvSplash.text = getString(R.string.no_internet)
-                callDelayed(DELAY) { finish() }
-            }
+            binding.tvSplash.text = getString(R.string.no_internet)
+            callDelayed(NO_INTERNET_DELAY) { finish() }
         }
     }
-
-
-
-
 }

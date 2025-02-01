@@ -55,8 +55,7 @@ class SongsFetcher(private val context: Context) {
             override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
                 response.body()?.results?.let {
                     it.forEach { song ->
-                        //val picturePath = downloadImage(context, song.imageUrl)
-                        songs.add(Item(null, song.title, song.imageUrl))
+                        songs.add(Item(null, song.title, song.imageUrl, song.trackUrl))
                     }
                 }
                 callback(songs)
@@ -78,6 +77,7 @@ class SongsFetcher(private val context: Context) {
                 val values = ContentValues().apply {
                     put(Item::title.name, it.title)
                     put(Item::picturePath.name, picturePath ?: "")
+                    put(Item::trackUrl.name, it.trackUrl)
                 }
 
                 context.contentResolver.insert(

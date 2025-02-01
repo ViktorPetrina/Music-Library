@@ -1,5 +1,6 @@
 package hr.vpetrina.music.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import hr.vpetrina.music.R
 import hr.vpetrina.music.adapter.ItemAdapter
+import hr.vpetrina.music.adapter.SearchItemAdapter
 import hr.vpetrina.music.api.API_URL
 import hr.vpetrina.music.api.SongsApi
 import hr.vpetrina.music.api.SongsFetcher
@@ -45,7 +47,7 @@ class SearchFragment : Fragment() {
 
         binding.rvSongs.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = ItemAdapter(requireContext(), songs)
+            adapter = SearchItemAdapter(requireContext(), songs)
         }
 
         binding.searchButton.setOnClickListener {
@@ -54,6 +56,7 @@ class SearchFragment : Fragment() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun fetchSongs(query: String) {
         SongsFetcher(requireContext()).getSongs(10, query) { items ->
             songs.clear()

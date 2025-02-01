@@ -92,7 +92,8 @@ fun Context.fetchItems(): MutableList<Item> {
         items.add(Item(
             cursor.getLong(cursor.getColumnIndex(Item::_id.name)),
             cursor.getString(cursor.getColumnIndex(Item::title.name)),
-            cursor.getString(cursor.getColumnIndex(Item::picturePath.name))
+            cursor.getString(cursor.getColumnIndex(Item::picturePath.name)),
+            cursor.getString(cursor.getColumnIndex(Item::trackUrl.name))
         ))
     }
 

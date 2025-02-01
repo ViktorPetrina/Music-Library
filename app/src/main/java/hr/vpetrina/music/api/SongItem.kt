@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName
 data class SongItem (
     @SerializedName("id") val id : String,
     @SerializedName("image") val imageUrl : String,
-    @SerializedName("name") val title : String
+    @SerializedName("name") val title : String,
+    @SerializedName("audio") val trackUrl: String
 )
 
 data class ApiResponse(
