@@ -6,7 +6,9 @@ data class SongItem (
     @SerializedName("id") val id : String,
     @SerializedName("image") val imageUrl : String,
     @SerializedName("name") val title : String,
-    @SerializedName("audio") val trackUrl: String
+    @SerializedName("audio") val trackUrl: String,
+    @SerializedName("artist_name") val artist: String,
+    @SerializedName("album_name") val album: String
 )
 
 data class ApiResponse(

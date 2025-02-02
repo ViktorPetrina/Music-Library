@@ -10,27 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/search_input"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:hint="@string/search_bar_hint"
-            android:background="@color/item_background_color"
-            android:textColor="@color/white"
-            android:inputType="text"
-            android:layout_marginTop="@dimen/search_margin"
-            android:layout_marginStart="@dimen/search_margin"
-            android:padding="@dimen/_10dp" />
-
-        <ImageButton
-            android:id="@+id/search_button"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/search_icon"
-            android:scaleType="fitCenter"
-            android:contentDescription="@string/search"
-            android:layout_margin="0dp"/>
+        <SearchView
+            android:id="@+id/svSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="@string/search_hint"
+            android:iconifiedByDefault="false"/>
 
     </LinearLayout>
 

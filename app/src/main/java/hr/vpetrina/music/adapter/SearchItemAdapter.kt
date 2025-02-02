@@ -1,11 +1,7 @@
 package hr.vpetrina.music.adapter
 
-import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
-import android.media.AudioAttributes
-import android.media.MediaPlayer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +10,12 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import hr.vpetrina.music.SONGS_PROVIDER_CONTENT_URI
-import hr.vpetrina.music.model.Item
 import hr.vpetrina.music.R
+import hr.vpetrina.music.SONGS_PROVIDER_CONTENT_URI
+import hr.vpetrina.music.framework.addItem
+import hr.vpetrina.music.framework.playSound
+import hr.vpetrina.music.model.Item
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
-import java.io.File
-import java.io.IOException
 
 class SearchItemAdapter(
     private val context: Context,
@@ -60,7 +56,7 @@ class SearchItemAdapter(
                 setMessage(context.getString(R.string.add_song_message))
                 setIcon(R.drawable.songs_icon)
                 setCancelable(true)
-                setPositiveButton("Yes") {_, _ -> addItem(item)}
+                setPositiveButton("Yes") {_, _ -> context.addItem(item)}
                 setNegativeButton("No", null)
                 show()
             }
@@ -73,50 +69,12 @@ class SearchItemAdapter(
                 setMessage("Play song?")
                 setIcon(R.drawable.play_icon)
                 setCancelable(true)
-                setPositiveButton("Play") {_, _ -> playSong(item)}
+                setPositiveButton("Play") {_, _ -> playSound(item.trackUrl)}
                 setNegativeButton(context.getString(R.string.cancel), null)
                 show()
             }
         }
 
         holder.bind(item)
-    }
-
-    private val mediaPlayer = MediaPlayer()
-
-    private fun playSong(item: Item) {
-        mediaPlayer.setAudioAttributes(
-            AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .build())
-
-        if (mediaPlayer.isPlaying) {
-            mediaPlayer.stop()
-            mediaPlayer.reset()
-            mediaPlayer.release()
-        }
-
-        try {
-            mediaPlayer.setDataSource(item.trackUrl)
-            mediaPlayer.prepare()
-            mediaPlayer.start()
-
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        Log.v("MUSIC", "Music is streaming")
-    }
-
-    private fun addItem(item: Item) {
-        val values = ContentValues().apply {
-            put(Item::title.name, item.title)
-            put(Item::picturePath.name, item.picturePath)
-            put(Item::trackUrl.name, item.trackUrl)
-        }
-
-        context.contentResolver.insert(
-            SONGS_PROVIDER_CONTENT_URI,
-            values
-        )
     }
 }

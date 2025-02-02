@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso
 import hr.vpetrina.music.SONGS_PROVIDER_CONTENT_URI
 import hr.vpetrina.music.model.Item
 import hr.vpetrina.music.R
+import hr.vpetrina.music.framework.playSound
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 import java.io.File
 
@@ -53,10 +54,10 @@ class ItemAdapter(
         holder.itemView.setOnClickListener {
             AlertDialog.Builder(context).apply {
                 setTitle(context.getString(R.string.song_details))
-                setMessage("Song details...")
+                setMessage(item.details)
                 setIcon(R.drawable.songs_icon)
                 setCancelable(true)
-                setPositiveButton("Play song") {_, _ -> playSong(item)}
+                setPositiveButton("Play song") {_, _ -> playSound(item.trackUrl)}
                 setNegativeButton("Ok", null)
                 show()
             }
@@ -76,10 +77,6 @@ class ItemAdapter(
         }
 
         holder.bind(item)
-    }
-
-    private fun playSong(item: Item) {
-        TODO("Not yet implemented")
     }
 
     private fun deleteItem(position: Int) {

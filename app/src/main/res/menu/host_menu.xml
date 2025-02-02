@@ -4,6 +4,12 @@
 
     <item
         app:showAsAction="ifRoom"
+        android:id="@+id/miStopSound"
+        android:title="@string/stop"
+        android:icon="@drawable/pause_icon" />
+
+    <item
+        app:showAsAction="ifRoom"
         android:id="@+id/miExit"
         android:title="@string/exit"
         android:icon="@drawable/exit" />

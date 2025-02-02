@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import hr.vpetrina.music.R
 import hr.vpetrina.music.adapter.ItemAdapter
@@ -39,6 +40,17 @@ class SearchFragment : Fragment() {
 
         songsApi = retrofit.create(SongsApi::class.java)
 
+        binding.svSearch.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { fetchSongs(it) }
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                return false
+            }
+        })
+
         return binding.root
     }
 
@@ -49,16 +61,11 @@ class SearchFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = SearchItemAdapter(requireContext(), songs)
         }
-
-        binding.searchButton.setOnClickListener {
-            val query = binding.searchInput.text.toString()
-            fetchSongs(query)
-        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun fetchSongs(query: String) {
-        SongsFetcher(requireContext()).getSongs(10, query) { items ->
+        SongsFetcher(requireContext()).getSongs(15, query) { items ->
             songs.clear()
             songs.addAll(items)
             binding.rvSongs.adapter?.notifyDataSetChanged()

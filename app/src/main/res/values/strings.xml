@@ -23,4 +23,6 @@
     <string name="empty_library">Empty library</string>
     <string name="empty_library_message">There are no songs in your library.</string>
     <string name="song_details">Song details</string>
+    <string name="stop">Stop</string>
+    <string name="search_hint">Song name...</string>
 </resources>

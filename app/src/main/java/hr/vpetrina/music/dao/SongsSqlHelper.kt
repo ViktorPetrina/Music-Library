@@ -14,7 +14,9 @@ private val CREATE_TABLE = "create table $TABLE_NAME( " +
         "${Item::_id.name} integer primary key autoincrement, " +
         "${Item::title.name} text not null, " +
         "${Item::picturePath.name} text not null, " +
-        "${Item::trackUrl.name} text not null " +
+        "${Item::trackUrl.name} text not null, " +
+        "${Item::artist.name} text not null, " +
+        "${Item::album.name} text not null " +
         ")"
 private const val DROP_TABLE = "drop table $TABLE_NAME"
 

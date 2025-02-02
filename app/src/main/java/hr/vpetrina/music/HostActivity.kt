@@ -1,20 +1,23 @@
 package hr.vpetrina.music
 
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.menu.MenuBuilder
 import androidx.core.view.GravityCompat
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import hr.vpetrina.music.databinding.ActivityHostBinding
+import hr.vpetrina.music.framework.stopCurrentSound
+
+var mediaPlayer: MediaPlayer? = null
 
 class HostActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityHostBinding
+    private lateinit var binding: ActivityHostBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +49,10 @@ class HostActivity : AppCompatActivity() {
         when(item.itemId) {
             android.R.id.home -> {
                 toggleDrawer()
+                return true
+            }
+            R.id.miStopSound -> {
+                stopCurrentSound()
                 return true
             }
             R.id.miExit -> {

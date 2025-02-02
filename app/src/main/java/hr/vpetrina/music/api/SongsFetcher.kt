@@ -30,6 +30,7 @@ class SongsFetcher(private val context: Context) {
         songsApi = retrofit.create(SongsApi::class.java)
     }
 
+    // ne koristim
     fun fetchItems(limit: Int, name: String) {
 
         val request = songsApi.fetchItems(limit, name)
@@ -55,7 +56,14 @@ class SongsFetcher(private val context: Context) {
             override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
                 response.body()?.results?.let {
                     it.forEach { song ->
-                        songs.add(Item(null, song.title, song.imageUrl, song.trackUrl))
+                        songs.add(Item(
+                            null,
+                            song.title,
+                            song.imageUrl,
+                            song.trackUrl,
+                            song.artist,
+                            song.album)
+                        )
                     }
                 }
                 callback(songs)
@@ -68,6 +76,7 @@ class SongsFetcher(private val context: Context) {
         })
     }
 
+    // ne koristim
     private fun populateItems(nasaItems: List<SongItem>) {
         val scope = CoroutineScope(Dispatchers.IO)
         scope.launch {

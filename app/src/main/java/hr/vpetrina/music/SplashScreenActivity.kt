@@ -11,7 +11,6 @@ import hr.vpetrina.music.framework.startActivity
 
 private const val DELAY = 3000L
 private const val NO_INTERNET_DELAY = 4500L
-const val DATA_IMPORTED = "hr.vpetrina.music.data_imported"
 
 class SplashScreenActivity : AppCompatActivity() {
 

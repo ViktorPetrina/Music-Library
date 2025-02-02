@@ -6,10 +6,11 @@ import android.content.Intent
 import hr.vpetrina.music.framework.setBooleanPreference
 import hr.vpetrina.music.framework.startActivity
 
+// ne koristim
 class SongsReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        context.setBooleanPreference(DATA_IMPORTED)
+        //context.setBooleanPreference(DATA_IMPORTED)
         context.startActivity<HostActivity>()
     }
 }
