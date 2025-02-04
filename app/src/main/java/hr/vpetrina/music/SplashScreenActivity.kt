@@ -8,7 +8,6 @@ import hr.vpetrina.music.framework.callDelayed
 import hr.vpetrina.music.framework.isOnline
 import hr.vpetrina.music.framework.startActivity
 
-
 private const val DELAY = 3000L
 private const val NO_INTERNET_DELAY = 4500L
 

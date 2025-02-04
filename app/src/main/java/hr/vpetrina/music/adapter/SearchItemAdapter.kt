@@ -1,6 +1,5 @@
 package hr.vpetrina.music.adapter
 
-import android.content.ContentValues
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import hr.vpetrina.music.R
-import hr.vpetrina.music.SONGS_PROVIDER_CONTENT_URI
 import hr.vpetrina.music.framework.addItem
 import hr.vpetrina.music.framework.playSound
 import hr.vpetrina.music.model.Item
@@ -22,7 +20,6 @@ class SearchItemAdapter(
     private val items: MutableList<Item>)
     : RecyclerView.Adapter<SearchItemAdapter.ViewHolder>()
 {
-
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val ivItem = itemView.findViewById<ImageView>(R.id.ivItem)
         private val tvItem = itemView.findViewById<TextView>(R.id.tvItem)

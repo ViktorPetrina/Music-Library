@@ -1,16 +1,8 @@
 package hr.vpetrina.music.api
 
-import android.content.ContentValues
 import android.content.Context
 import android.util.Log
-import hr.vpetrina.music.SONGS_PROVIDER_CONTENT_URI
-import hr.vpetrina.music.SongsReceiver
-import hr.vpetrina.music.framework.sendBroadcast
-import hr.vpetrina.music.handler.downloadImage
 import hr.vpetrina.music.model.Item
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,22 +20,6 @@ class SongsFetcher(private val context: Context) {
             .build()
 
         songsApi = retrofit.create(SongsApi::class.java)
-    }
-
-    // ne koristim
-    fun fetchItems(limit: Int, name: String) {
-
-        val request = songsApi.fetchItems(limit, name)
-
-        request.enqueue(object: Callback<ApiResponse> {
-            override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
-                response.body()?.results?.let { populateItems(it) }
-            }
-
-            override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
-                Log.d(javaClass.name, t.message, t)
-            }
-        })
     }
 
     fun getSongs(limit: Int, name: String, callback: (MutableList<Item>) -> Unit) {
@@ -74,28 +50,5 @@ class SongsFetcher(private val context: Context) {
                 callback(mutableListOf())
             }
         })
-    }
-
-    // ne koristim
-    private fun populateItems(nasaItems: List<SongItem>) {
-        val scope = CoroutineScope(Dispatchers.IO)
-        scope.launch {
-            nasaItems.forEach {
-                val picturePath = downloadImage(context, it.imageUrl)
-
-                val values = ContentValues().apply {
-                    put(Item::title.name, it.title)
-                    put(Item::picturePath.name, picturePath ?: "")
-                    put(Item::trackUrl.name, it.trackUrl)
-                }
-
-                context.contentResolver.insert(
-                    SONGS_PROVIDER_CONTENT_URI,
-                    values
-                )
-            }
-
-            context.sendBroadcast<SongsReceiver>()
-        }
     }
 }

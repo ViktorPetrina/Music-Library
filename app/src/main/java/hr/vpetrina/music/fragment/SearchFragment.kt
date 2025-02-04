@@ -2,24 +2,20 @@ package hr.vpetrina.music.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import hr.vpetrina.music.R
-import hr.vpetrina.music.adapter.ItemAdapter
 import hr.vpetrina.music.adapter.SearchItemAdapter
 import hr.vpetrina.music.api.API_URL
 import hr.vpetrina.music.api.SongsApi
 import hr.vpetrina.music.api.SongsFetcher
-import hr.vpetrina.music.databinding.FragmentItemsBinding
 import hr.vpetrina.music.databinding.FragmentSearchBinding
 import hr.vpetrina.music.model.Item
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 
 class SearchFragment : Fragment() {
 
@@ -43,6 +39,7 @@ class SearchFragment : Fragment() {
         binding.svSearch.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let { fetchSongs(it) }
+                binding.svSearch.clearFocus()
                 return true
             }
 

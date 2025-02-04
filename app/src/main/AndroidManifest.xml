@@ -21,11 +21,6 @@
             android:enabled="true"
             android:exported="false" />
 
-        <receiver
-            android:name=".SongsReceiver"
-            android:enabled="true"
-            android:exported="false" />
-
         <activity
             android:name=".HostActivity"
             android:exported="false" />
